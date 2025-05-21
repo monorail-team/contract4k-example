@@ -1,8 +1,5 @@
 package com.example.demo.product.domain
 
-import annotation.Contract4kWith
-import com.example.demo.global.*
-import com.example.demo.product.contract.StockContract
 import java.util.concurrent.atomic.AtomicLong
 
 class Product(
@@ -29,21 +26,7 @@ class Product(
         }
     }
 
-    fun deductStock1(stock: Int) : Int{
-        require(this.stock >= stock) { "재고 보다 많은 수량을 구매 할 수 없습니다." }
-
-        this.stock -= stock
-
-        if(this.stock == 0){
-            status = ProductStatus.SOLD_OUT
-        }
-
-        require(this.stock >= 0) { "재고는 음수가 될 수 없습니다." }
-        return this.stock
-    }
-
-    @Contract4kWith(StockContract::class)
-    fun deductStock2(stock: Int) : Int{
+    fun deductStock(stock: Int) : Int{
         require(this.stock >= stock) { "재고 보다 많은 수량을 구매 할 수 없습니다." }
 
         this.stock -= stock

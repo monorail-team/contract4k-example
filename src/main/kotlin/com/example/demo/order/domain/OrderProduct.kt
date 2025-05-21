@@ -22,11 +22,11 @@ class OrderProduct(
                 order = order,
                 product = product,
                 quantity = quantity,
-                unitPrice = product.price
+                unitPrice = Price(product.price)
             )
             order.addOrderProduct(orderProduct)
             order.updateTotalPrice(order.totalPrice + orderProduct.getTotalPrice())
-            product.deductStock(quantity)
+            product.deductStock(quantity.value)
             return orderProduct
         }
     }

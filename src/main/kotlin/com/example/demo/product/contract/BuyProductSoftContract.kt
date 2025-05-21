@@ -1,17 +1,19 @@
 package com.example.demo.product.contract
 
 import com.example.demo.product.service.dto.response.ProductResponse
-import condition.util.*
+import condition.util.between
+import condition.util.`is`
+import condition.util.positive
 import contract.Contract4KDsl
-import contract.conditions
+import contract.softConditions
 
-object BuyProductContract: Contract4KDsl<Triple<Long, Int, Int>, ProductResponse> {
+object BuyProductSoftContract : Contract4KDsl<Triple<Long, Int, Int>, ProductResponse> {
     override fun validatePre(input: Triple<Long, Int, Int>) {
         val (id, stock, price) = input
 
-        conditions {
+        softConditions {
             "구매 개수는 1이상 100이하여야 합니다." means { stock between 1..100}
-            "가격은 양수여야 합니다." means { stock `is` positive }
+            "가격은 양수여야 합니다." means { price `is` positive }
         }
     }
 
@@ -19,7 +21,7 @@ object BuyProductContract: Contract4KDsl<Triple<Long, Int, Int>, ProductResponse
         val stock = result.stock
         val price = result.price
 
-        conditions {
+        softConditions {
             "남은 재고는 0이상여야 합니다." means { stock >= 0 }
             "가격은 양수여야 합니다." means { price `is` positive }
         }
